@@ -37,7 +37,23 @@ public class Main {
             }
         }
     }
-}
+
+
+    private static void addNewToy(Scanner scanner) {
+        System.out.println("Enter the toy ID:");
+        int id = scanner.nextInt();
+        scanner.nextLine(); // Очистка буфера
+
+        System.out.println("Enter the name of the toy:");
+        String name = scanner.nextLine();
+
+        System.out.println("Enter the weight of the toy:");
+        double weight = scanner.nextDouble();
+        scanner.nextLine(); // Очистка буфера
+
+        Toy newToy = new Toy(id, name, weight);
+        toyQueue.add(newToy);
+    }
 class Toy implements Comparable<Toy> {
     private int id;
     private String name;
