@@ -54,6 +54,23 @@ public class Main {
         Toy newToy = new Toy(id, name, weight);
         toyQueue.add(newToy);
     }
+    private static void Give() {
+        if (toyQueue.isEmpty()) {
+            System.out.println("The toy list is empty. Add toys before the drawing.");
+            return;
+        }
+
+        Toy winningToy = getRandomToy();
+
+        try (FileWriter writer = new FileWriter(RESULTS_FILE, true)) {
+            writer.write("The toy won: " + winningToy.getName() + "\n");
+        } catch (IOException e) {
+            System.out.println("An error occurred when writing the results of the drawing to a file.");
+        }
+
+        System.out.println("The drawing is over. The toy won: " + winningToy.getName());
+    }
+
 class Toy implements Comparable<Toy> {
     private int id;
     private String name;
