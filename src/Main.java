@@ -19,7 +19,7 @@ public class Main {
             System.out.println("3. Exit");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Очистка буфера
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
@@ -42,18 +42,19 @@ public class Main {
     private static void addNewToy(Scanner scanner) {
         System.out.println("Enter the toy ID:");
         int id = scanner.nextInt();
-        scanner.nextLine(); // Очистка буфера
+        scanner.nextLine();
 
         System.out.println("Enter the name of the toy:");
         String name = scanner.nextLine();
 
         System.out.println("Enter the weight of the toy:");
         double weight = scanner.nextDouble();
-        scanner.nextLine(); // Очистка буфера
+        scanner.nextLine();
 
         Toy newToy = new Toy(id, name, weight);
         toyQueue.add(newToy);
     }
+
     private static void Give() {
         if (toyQueue.isEmpty()) {
             System.out.println("The toy list is empty. Add toys before the drawing.");
@@ -70,6 +71,27 @@ public class Main {
 
         System.out.println("The drawing is over. The toy won: " + winningToy.getName());
     }
+
+    private static Toy getRandomToy() {
+        double totalWeight = 0;
+
+        for (Toy toy : toyQueue) {
+            totalWeight += toy.getWeight();
+        }
+
+        double randomWeight = Math.random() * totalWeight;
+
+        for (Toy toy : toyQueue) {
+            randomWeight -= toy.getWeight();
+            if (randomWeight <= 0) {
+                toyQueue.remove(toy);
+                return toy;
+            }
+        }
+
+        return null;
+    }
+}
 
 class Toy implements Comparable<Toy> {
     private int id;
@@ -96,7 +118,6 @@ class Toy implements Comparable<Toy> {
 
     @Override
     public int compareTo(Toy otherToy) {
-        // Сравниваем игрушки по весу для определения порядка в очереди
         return Double.compare(this.weight, otherToy.weight);
     }
 }
